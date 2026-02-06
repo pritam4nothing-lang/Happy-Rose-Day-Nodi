@@ -16,7 +16,7 @@
 
 body{
     min-height:100vh;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -28,81 +28,72 @@ body{
 .card{
     width:100%;
     max-width:420px;
-    background: rgba(255,255,255,0.35);
-    backdrop-filter: blur(12px);
-    border-radius:25px;
+    background:rgba(255,255,255,0.35);
+    backdrop-filter:blur(14px);
+    border-radius:26px;
     padding:30px 25px;
     text-align:center;
-    box-shadow:0 20px 45px rgba(0,0,0,0.25);
+    box-shadow:0 25px 50px rgba(0,0,0,0.25);
 }
 
-/* TEXT */
+/* TITLE */
 h1{
     font-size:30px;
     color:#c2185b;
-    margin-bottom:15px;
+    margin-bottom:14px;
 }
 
+/* MESSAGE (PROPER SIZE) */
 .letter{
     font-family:'Playfair Display', serif;
-    font-size:20px;
-    line-height:1.6;
+    font-size:21px;
+    line-height:1.65;
     color:#7a0030;
-    margin-bottom:20px;
+    margin-bottom:22px;
 }
 
 .letter span{
     font-family:'Pacifico', cursive;
-    font-size:24px;
+    font-size:25px;
     color:#8e0038;
 }
 
-/* FLIP CARD */
-.flip-container{
-    perspective:1000px;
-}
-
-.flip-card{
+/* IMAGE AREA */
+.reveal-box{
     width:100%;
     max-width:280px;
     height:360px;
-    margin:auto;
-    position:relative;
-    transform-style:preserve-3d;
-    transition:transform 1s ease;
+    margin:0 auto;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 15px 30px rgba(0,0,0,0.35);
     cursor:pointer;
+    position:relative;
 }
 
-.flip-card.flipped{
-    transform:rotateY(180deg);
-}
-
-.face{
-    position:absolute;
+.reveal-box img{
     width:100%;
     height:100%;
     object-fit:cover;
-    border-radius:18px;
-    backface-visibility:hidden;
-    box-shadow:0 15px 30px rgba(0,0,0,0.35);
+    position:absolute;
+    top:0;
+    left:0;
+    transition:opacity 0.8s ease, transform 0.8s ease;
 }
 
-.front{
-    animation:bounceIn 1.4s ease;
+/* initial */
+#img1,#img2{
+    opacity:0;
+    transform:scale(0.9);
 }
 
-.back{
-    transform:rotateY(180deg);
+/* visible */
+.show{
+    opacity:1;
+    transform:scale(1);
 }
 
-@keyframes bounceIn{
-    0%{opacity:0;transform:scale(0.3);}
-    50%{opacity:1;transform:scale(1.1);}
-    70%{transform:scale(0.95);}
-    100%{transform:scale(1);}
-}
-
-/* FLOATING ICONS */
+/* floating hearts */
 .float{
     position:absolute;
     bottom:-40px;
@@ -125,57 +116,55 @@ h1{
 
     <div class="letter">
         Dear <span>Nodi</span>,<br><br>
-        This rose hides something special…  
-        Tap it 💗
+        This rose carries more than petals and fragrance.  
+        It carries moments, memories, and a heart  
+        that smiles every time it thinks of you.
+        <br><br>
+        Tap gently… something special is waiting 💗
     </div>
 
-    <!-- FLIP CARD -->
-    <div class="flip-container">
-        <div class="flip-card" id="flipCard">
-            <img src="rose_for_nodi.gif" class="face front" id="frontImg">
-            <img src="reveal_pic_1.jpg" class="face back" id="backImg">
-        </div>
+    <!-- IMAGE STACK -->
+    <div class="reveal-box" id="box">
+        <img src="rose_for_nodi.gif" id="gif" class="show">
+        <img src="reveal_pic_1.jpg" id="img1">
+        <img src="reveal_pic_2.jpg" id="img2">
     </div>
 </div>
 
-<!-- SOUND -->
-<audio id="loveSound" src="i_love_you.mp3"></audio>
+<audio id="sound" src="i_love_you.mp3"></audio>
 
 <script>
-const flipCard = document.getElementById("flipCard");
-const backImg = document.getElementById("backImg");
-const sound = document.getElementById("loveSound");
-
 let step = 0;
+const box = document.getElementById("box");
+const gif = document.getElementById("gif");
+const img1 = document.getElementById("img1");
+const img2 = document.getElementById("img2");
+const sound = document.getElementById("sound");
 
-flipCard.addEventListener("click", () => {
+box.addEventListener("click", ()=>{
     if(step === 0){
-        // First tap → Photo 1 + sound
-        flipCard.classList.add("flipped");
+        gif.classList.remove("show");
+        img1.classList.add("show");
         sound.play();
         step = 1;
     }
     else if(step === 1){
-        // Second tap → Photo 2
-        flipCard.classList.remove("flipped");
-        setTimeout(()=>{
-            backImg.src = "reveal_pic_2.jpg";
-            flipCard.classList.add("flipped");
-        }, 400);
+        img1.classList.remove("show");
+        img2.classList.add("show");
         step = 2;
     }
 });
 
-// Floating hearts
-const icons = ["🌹","💖","💕","🌸"];
+/* floating hearts */
+const icons=["🌹","💖","💕","🌸"];
 for(let i=0;i<18;i++){
-    const span = document.createElement("span");
-    span.className="float";
-    span.innerText=icons[Math.floor(Math.random()*icons.length)];
-    span.style.left=Math.random()*100+"vw";
-    span.style.fontSize=(Math.random()*18+14)+"px";
-    span.style.animationDuration=(Math.random()*4+5)+"s";
-    document.body.appendChild(span);
+    const s=document.createElement("span");
+    s.className="float";
+    s.innerText=icons[Math.floor(Math.random()*icons.length)];
+    s.style.left=Math.random()*100+"vw";
+    s.style.fontSize=(Math.random()*18+14)+"px";
+    s.style.animationDuration=(Math.random()*4+5)+"s";
+    document.body.appendChild(s);
 }
 </script>
 
