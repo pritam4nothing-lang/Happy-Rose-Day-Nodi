@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <title>Happy Rose Day Nodi</title>
 
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
 <style>
     *{
         margin:0;
         padding:0;
         box-sizing:border-box;
-        font-family: 'Segoe UI', sans-serif;
     }
 
     body{
@@ -19,15 +21,16 @@
         justify-content:center;
         align-items:center;
         overflow:hidden;
+        font-family: 'Segoe UI', sans-serif;
     }
 
     .card{
-        background: rgba(255,255,255,0.25);
-        backdrop-filter: blur(10px);
-        border-radius:20px;
-        padding:30px;
+        background: rgba(255,255,255,0.28);
+        backdrop-filter: blur(12px);
+        border-radius:25px;
+        padding:35px 40px;
         text-align:center;
-        box-shadow:0 20px 40px rgba(0,0,0,0.25);
+        box-shadow:0 25px 50px rgba(0,0,0,0.25);
         animation: pop 1s ease;
     }
 
@@ -38,19 +41,41 @@
 
     h1{
         color:#c2185b;
-        margin-bottom:10px;
+        margin-bottom:15px;
+        font-size:34px;
     }
 
+    /* SPECIAL MESSAGE */
     p{
-        color:#880e4f;
-        margin-bottom:20px;
-        font-size:18px;
+        font-family: 'Pacifico', cursive;
+        color:#8e0038;
+        font-size:28px;
+        margin-bottom:25px;
     }
 
-    img{
-        width:220px;
-        border-radius:15px;
-        box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    /* MAIN GIF */
+    .main-gif{
+        width:300px;
+        animation: bounceIn 1.4s ease;
+        border-radius:18px;
+        box-shadow:0 15px 30px rgba(0,0,0,0.35);
+    }
+
+    @keyframes bounceIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.3);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        70% {
+            transform: scale(0.95);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 
     .float{
@@ -73,20 +98,20 @@
     <h1>🌹 Happy Rose Day 🌹</h1>
     <p>Nodi, this rose is just for you 💗</p>
 
-    <!-- GIF NAME USED HERE -->
-    <img src="rose_for_nodi.gif" alt="Rose for Nodi">
+    <!-- MAIN CHARACTER GIF -->
+    <img src="rose_for_nodi.gif" alt="Rose for Nodi" class="main-gif">
 </div>
 
 <script>
     const icons = ["🌹","💖","🌸","💕"];
 
-    for(let i=0;i<20;i++){
+    for(let i=0;i<25;i++){
         const span = document.createElement("span");
         span.className = "float";
         span.innerText = icons[Math.floor(Math.random()*icons.length)];
         span.style.left = Math.random()*100 + "vw";
         span.style.animationDuration = (Math.random()*3 + 4) + "s";
-        span.style.fontSize = (Math.random()*15 + 15) + "px";
+        span.style.fontSize = (Math.random()*18 + 16) + "px";
         document.body.appendChild(span);
     }
 </script>
