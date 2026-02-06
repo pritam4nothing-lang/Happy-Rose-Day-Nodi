@@ -67,14 +67,14 @@ h1{
     overflow:hidden;
     box-shadow:0 15px 30px rgba(0,0,0,0.35);
     cursor:pointer;
-    background:#fff;
+    background:transparent;   /* ❌ no white */
 }
 
 .image-box img{
     width:100%;
     height:100%;
-    object-fit:contain;   /* 🔥 NO MORE CUTTING */
-    background:#fff;
+    object-fit:cover;        /* 🔥 FULL FIT + CROP */
+    background:transparent;  /* ❌ no white */
 }
 </style>
 </head>
@@ -94,7 +94,7 @@ h1{
         Tap gently… something special is waiting 💗
     </div>
 
-    <!-- CLICK SAFE IMAGE -->
+    <!-- IMAGE -->
     <div class="image-box" id="box">
         <img id="mainImg" src="rose_for_nodi.gif">
     </div>
@@ -110,7 +110,7 @@ const sound = document.getElementById("sound");
 const box = document.getElementById("box");
 
 box.addEventListener("click", ()=>{
-    sound.currentTime = 0; // replay sound every tap
+    sound.currentTime = 0;
     sound.play();
 
     if(step === 0){
@@ -129,4 +129,5 @@ box.addEventListener("click", ()=>{
 </script>
 
 </body>
+</html></body>
 </html>
