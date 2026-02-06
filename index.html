@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Rose Day Nodi</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
 <style>
@@ -21,8 +20,8 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    overflow:hidden;
     padding:20px;
+    overflow:hidden;
 }
 
 /* CARD */
@@ -35,42 +34,65 @@ body{
     padding:30px 25px;
     text-align:center;
     box-shadow:0 20px 45px rgba(0,0,0,0.25);
-    animation: pop 0.9s ease;
 }
 
-@keyframes pop{
-    from{transform:scale(0.7);opacity:0;}
-    to{transform:scale(1);opacity:1;}
-}
-
+/* TEXT */
 h1{
     font-size:30px;
     color:#c2185b;
     margin-bottom:15px;
 }
 
-/* LETTER MESSAGE */
 .letter{
-    font-family: 'Playfair Display', serif;
+    font-family:'Playfair Display', serif;
     font-size:20px;
     line-height:1.6;
     color:#7a0030;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
 .letter span{
-    font-family: 'Pacifico', cursive;
+    font-family:'Pacifico', cursive;
     font-size:24px;
     color:#8e0038;
 }
 
-/* MAIN GIF */
-.main-gif{
+/* FLIP CARD */
+.flip-container{
+    perspective:1000px;
+}
+
+.flip-card{
     width:100%;
     max-width:280px;
+    height:360px;
+    margin:auto;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform 1s ease;
+    cursor:pointer;
+}
+
+.flip-card.flipped{
+    transform:rotateY(180deg);
+}
+
+.face{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
     border-radius:18px;
-    animation: bounceIn 1.4s ease;
+    backface-visibility:hidden;
     box-shadow:0 15px 30px rgba(0,0,0,0.35);
+}
+
+.front{
+    animation:bounceIn 1.4s ease;
+}
+
+.back{
+    transform:rotateY(180deg);
 }
 
 @keyframes bounceIn{
@@ -84,7 +106,7 @@ h1{
 .float{
     position:absolute;
     bottom:-40px;
-    animation: floatUp linear infinite;
+    animation:floatUp linear infinite;
     pointer-events:none;
 }
 
@@ -103,29 +125,56 @@ h1{
 
     <div class="letter">
         Dear <span>Nodi</span>,<br><br>
-        This little rose is not just a flower,  
-        it carries a piece of my heart with it.  
-        Every petal holds a smile,  
-        every color reminds me of you.
-        <br><br>
-        On this Rose Day, I just want you to know  
-        how special you are to me,  
-        today and always 💗
+        This rose hides something special…  
+        Tap it 💗
     </div>
 
-    <img src="rose_for_nodi.gif" class="main-gif" alt="Rose for Nodi">
+    <!-- FLIP CARD -->
+    <div class="flip-container">
+        <div class="flip-card" id="flipCard">
+            <img src="rose_for_nodi.gif" class="face front" id="frontImg">
+            <img src="reveal_pic_1.jpg" class="face back" id="backImg">
+        </div>
+    </div>
 </div>
 
-<script>
-const icons = ["🌹","💖","🌸","💕"];
+<!-- SOUND -->
+<audio id="loveSound" src="i_love_you.mp3"></audio>
 
+<script>
+const flipCard = document.getElementById("flipCard");
+const backImg = document.getElementById("backImg");
+const sound = document.getElementById("loveSound");
+
+let step = 0;
+
+flipCard.addEventListener("click", () => {
+    if(step === 0){
+        // First tap → Photo 1 + sound
+        flipCard.classList.add("flipped");
+        sound.play();
+        step = 1;
+    }
+    else if(step === 1){
+        // Second tap → Photo 2
+        flipCard.classList.remove("flipped");
+        setTimeout(()=>{
+            backImg.src = "reveal_pic_2.jpg";
+            flipCard.classList.add("flipped");
+        }, 400);
+        step = 2;
+    }
+});
+
+// Floating hearts
+const icons = ["🌹","💖","💕","🌸"];
 for(let i=0;i<18;i++){
     const span = document.createElement("span");
-    span.className = "float";
-    span.innerText = icons[Math.floor(Math.random()*icons.length)];
-    span.style.left = Math.random()*100 + "vw";
-    span.style.fontSize = (Math.random()*18 + 14) + "px";
-    span.style.animationDuration = (Math.random()*4 + 5) + "s";
+    span.className="float";
+    span.innerText=icons[Math.floor(Math.random()*icons.length)];
+    span.style.left=Math.random()*100+"vw";
+    span.style.fontSize=(Math.random()*18+14)+"px";
+    span.style.animationDuration=(Math.random()*4+5)+"s";
     document.body.appendChild(span);
 }
 </script>
